@@ -20,6 +20,7 @@ require("Hmisc")
 `r Hmisc::hidingTOC(levels = 2)`
 
 ```{r setup, warning=FALSE}
+library(foreign)
 library(Statamarkdown)
 ```
 
@@ -27,6 +28,15 @@ library(Statamarkdown)
 
 ```{r}
 set.seed(12345)
+n <- 2000
+g1 <- rbinom(n, 2, .4)
+g2 <- rbinom(n, 2, .3)
+g3 <- rbinom(n, 2, .25)
+u <- rnormal(n)
+x1 <- g1 + g2 + g3 + u + rnormal(n)
+x2 <- .5*g1 - .5*g2 + 0*g3 + u + rnormal(n)
+y <- x1 + 0.5*x2 + u + rnormal(n)
+dat <- data.frame(g1, g2, g3, x1, x2, y)
 ```
 
 ## Example from Stata ivregress helpfile
