@@ -62,3 +62,23 @@ ivregress 2sls y w (x1 x2 = g1 g2 g3)
 estat endog
 estat overid
 ```
+
+## Without adjusting for a covariate
+
+### R code
+
+```{r}
+fit <- ivreg(y ~ x1 + x2 | g1 + g2 + g3, data = dat)
+summary(fit)
+# Estimates with 95% CIs
+cbind(coef(fit), confint.default(fit))
+```
+
+### Stata code
+
+```{stata}
+use mvmr-example
+ivregress 2sls y (x1 x2 = g1 g2 g3)
+estat endog
+estat overid
+```
