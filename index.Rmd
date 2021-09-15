@@ -19,8 +19,12 @@ require("Hmisc")
 ```
 `r Hmisc::hidingTOC(levels = 2)`
 
-```{r setup, warning=FALSE}
-library(foreign)
+```{r setup, message=FALSE}
+library(haven)
+library(ivreg)
+if (!requireNamespace("Statamarkdown", quietly = TRUE)) {
+  remotes::install_github("Hemken/Statamarkdown")
+}
 library(Statamarkdown)
 ```
 
@@ -29,18 +33,32 @@ library(Statamarkdown)
 ```{r}
 set.seed(12345)
 n <- 2000
-g1 <- rbinom(n, 2, .4)
+g1 <- rbinom(n, 2, .4) # genetic instruments
 g2 <- rbinom(n, 2, .3)
 g3 <- rbinom(n, 2, .25)
-u <- rnormal(n)
-x1 <- g1 + g2 + g3 + u + rnormal(n)
-x2 <- .5*g1 - .5*g2 + 0*g3 + u + rnormal(n)
-y <- x1 + 0.5*x2 + u + rnormal(n)
-dat <- data.frame(g1, g2, g3, x1, x2, y)
+u <- rnorm(n) # unmeasured confounder
+w <- runif(n) # measured confounder
+x1 <- g1 + g2 + g3 + w + u + rnorm(n) # exposure 1
+x2 <- .5*g1 - .5*g2 + 0*g3 + u + rnorm(n) # exposure 2
+y <- x1 + 0.5*x2 + u + rnorm(n) # outcome
+dat <- data.frame(g1, g2, g3, w, x1, x2, y)
+write_dta(dat, "mvmr-example.dta")
 ```
 
-## Example from Stata ivregress helpfile
+## One-sample MVMR with TSLS in R
+
+```{r}
+fit <- ivreg(y ~ x1 + x2 + w | w + g1 + g2 + g3, data = dat)
+summary(fit)
+# Estimates with 95% CIs
+cbind(coef(fit), confint.default(fit))
+```
+
+## One-sample MVMR with TSLS in Stata
 
 ```{stata}
-use 
+use mvmr-example
+ivregress 2sls y w (x1 x2 = g1 g2 g3)
+estat endog
+estat overid
 ```
