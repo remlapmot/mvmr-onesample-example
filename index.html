@@ -386,8 +386,83 @@ Instruments:   w g1 g2 g3
   Sargan (score) chi2(1) =  .516504  (p = 0.4723)
   Basmann chi2(1)        =  .515345  (p = 0.4728)</code></pre>
 </div>
+<div id="without-adjusting-for-a-covariate" class="section level2">
+<h2>Without adjusting for a covariate</h2>
+<div id="r-code" class="section level3">
+<h3>R code</h3>
+<pre class="r"><code>fit &lt;- ivreg(y ~ x1 + x2 | g1 + g2 + g3, data = dat)
+summary(fit)</code></pre>
+<pre><code>
+Call:
+ivreg(formula = y ~ x1 + x2 | g1 + g2 + g3, data = dat)
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkV4YW1wbGUgZml0dGluZyBNVk1SIHRvIG9uZS1zYW1wbGUgZGF0YSINCmF1dGhvcjogIlRvbSBQYWxtZXIiDQpkYXRlOiAiYHIgZm9ybWF0KFN5cy50aW1lKCksICclZCAlQiAlWScpYCINCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZmxvYXQ6DQogICAgICBjb2xsYXBzZWQ6IGZhbHNlDQogICAgICBzbW9vdGhfc2Nyb2xsOiBmYWxzZQ0KICAgIHRvY19kZXB0aDogMg0KICAgIGNvZGVfZG93bmxvYWQ6IHRydWUNCiAgICBjb2RlX2ZvbGRpbmc6IHNob3cNCiAgICBhbmNob3Jfc2VjdGlvbnM6IHRydWUNCi0tLQ0KDQpgYGB7ciBpbmNsdWRlPUZBTFNFfQ0KcmVxdWlyZSgiSG1pc2MiKQ0KYGBgDQpgciBIbWlzYzo6aGlkaW5nVE9DKGxldmVscyA9IDIpYA0KDQpgYGB7ciBzZXR1cCwgbWVzc2FnZT1GQUxTRX0NCmxpYnJhcnkoaGF2ZW4pDQpsaWJyYXJ5KGl2cmVnKQ0KaWYgKCFyZXF1aXJlTmFtZXNwYWNlKCJTdGF0YW1hcmtkb3duIiwgcXVpZXRseSA9IFRSVUUpKSB7DQogIHJlbW90ZXM6Omluc3RhbGxfZ2l0aHViKCJIZW1rZW4vU3RhdGFtYXJrZG93biIpDQp9DQpsaWJyYXJ5KFN0YXRhbWFya2Rvd24pDQpgYGANCg0KIyMgU2ltdWxhdGUgZGF0YQ0KDQpgYGB7cn0NCnNldC5zZWVkKDEyMzQ1KQ0KbiA8LSAyMDAwDQpnMSA8LSByYmlub20obiwgMiwgLjQpICMgZ2VuZXRpYyBpbnN0cnVtZW50cw0KZzIgPC0gcmJpbm9tKG4sIDIsIC4zKQ0KZzMgPC0gcmJpbm9tKG4sIDIsIC4yNSkNCnUgPC0gcm5vcm0obikgIyB1bm1lYXN1cmVkIGNvbmZvdW5kZXINCncgPC0gcnVuaWYobikgIyBtZWFzdXJlZCBjb25mb3VuZGVyDQp4MSA8LSBnMSArIGcyICsgZzMgKyB3ICsgdSArIHJub3JtKG4pICMgZXhwb3N1cmUgMQ0KeDIgPC0gLjUqZzEgLSAuNSpnMiArIDAqZzMgKyB1ICsgcm5vcm0obikgIyBleHBvc3VyZSAyDQp5IDwtIHgxICsgMC41KngyICsgdSArIHJub3JtKG4pICMgb3V0Y29tZQ0KZGF0IDwtIGRhdGEuZnJhbWUoZzEsIGcyLCBnMywgdywgeDEsIHgyLCB5KQ0Kd3JpdGVfZHRhKGRhdCwgIm12bXItZXhhbXBsZS5kdGEiKQ0KYGBgDQoNCiMjIE9uZS1zYW1wbGUgTVZNUiB3aXRoIFRTTFMgaW4gUg0KDQpgYGB7cn0NCmZpdCA8LSBpdnJlZyh5IH4geDEgKyB4MiArIHcgfCB3ICsgZzEgKyBnMiArIGczLCBkYXRhID0gZGF0KQ0Kc3VtbWFyeShmaXQpDQojIEVzdGltYXRlcyB3aXRoIDk1JSBDSXMNCmNiaW5kKGNvZWYoZml0KSwgY29uZmludC5kZWZhdWx0KGZpdCkpDQpgYGANCg0KIyMgT25lLXNhbXBsZSBNVk1SIHdpdGggVFNMUyBpbiBTdGF0YQ0KDQpgYGB7c3RhdGF9DQp1c2UgbXZtci1leGFtcGxlDQppdnJlZ3Jlc3MgMnNscyB5IHcgKHgxIHgyID0gZzEgZzIgZzMpDQplc3RhdCBlbmRvZw0KZXN0YXQgb3ZlcmlkDQpgYGANCg==</div>
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-4.759096 -0.998562  0.002785  1.001368  5.139581 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.02255    0.07854  -0.287    0.774    
+x1           1.01155    0.03010  33.612  &lt; 2e-16 ***
+x2           0.39400    0.06856   5.747 1.05e-08 ***
+
+Diagnostic tests:
+                       df1  df2 statistic p-value    
+Weak instruments (x1)    3 1996   373.116  &lt;2e-16 ***
+Weak instruments (x2)    3 1996    81.276  &lt;2e-16 ***
+Wu-Hausman               2 1995   115.848  &lt;2e-16 ***
+Sargan                   1   NA     0.499    0.48    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 1.469 on 1997 degrees of freedom
+Multiple R-Squared: 0.7846, Adjusted R-squared: 0.7844 
+Wald test: 616.3 on 2 and 1997 DF,  p-value: &lt; 2.2e-16 </code></pre>
+<pre class="r"><code># Estimates with 95% CIs
+cbind(coef(fit), confint.default(fit))</code></pre>
+<pre><code>                             2.5 %    97.5 %
+(Intercept) -0.02255424 -0.1764869 0.1313784
+x1           1.01154544  0.9525599 1.0705310
+x2           0.39400458  0.2596236 0.5283856</code></pre>
+</div>
+<div id="stata-code" class="section level3">
+<h3>Stata code</h3>
+<pre class="stata"><code>use mvmr-example
+ivregress 2sls y (x1 x2 = g1 g2 g3)
+estat endog
+estat overid</code></pre>
+<pre><code>Instrumental variables (2SLS) regression          Number of obs   =      2,000
+                                                  Wald chi2(2)    =    1234.42
+                                                  Prob &gt; chi2     =     0.0000
+                                                  R-squared       =     0.7846
+                                                  Root MSE        =      1.468
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      z    P&gt;|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+          x1 |   1.011545   .0300726    33.64   0.000     .9526042    1.070487
+          x2 |   .3940046   .0685116     5.75   0.000     .2597244    .5282848
+       _cons |  -.0225542   .0784796    -0.29   0.774    -.1763714     .131263
+------------------------------------------------------------------------------
+Instrumented:  x1 x2
+Instruments:   g1 g2 g3
+
+
+  Tests of endogeneity
+  Ho: variables are exogenous
+
+  Durbin (score) chi2(2)          =  208.107  (p = 0.0000)
+  Wu-Hausman F(2,1995)            =  115.848  (p = 0.0000)
+
+
+  Tests of overidentifying restrictions:
+
+  Sargan (score) chi2(1) =  .499025  (p = 0.4799)
+  Basmann chi2(1)        =  .498152  (p = 0.4803)</code></pre>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkV4YW1wbGUgZml0dGluZyBNVk1SIHRvIG9uZS1zYW1wbGUgZGF0YSINCmF1dGhvcjogIlRvbSBQYWxtZXIiDQpkYXRlOiAiYHIgZm9ybWF0KFN5cy50aW1lKCksICclZCAlQiAlWScpYCINCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZmxvYXQ6DQogICAgICBjb2xsYXBzZWQ6IGZhbHNlDQogICAgICBzbW9vdGhfc2Nyb2xsOiBmYWxzZQ0KICAgIHRvY19kZXB0aDogMg0KICAgIGNvZGVfZG93bmxvYWQ6IHRydWUNCiAgICBjb2RlX2ZvbGRpbmc6IHNob3cNCiAgICBhbmNob3Jfc2VjdGlvbnM6IHRydWUNCi0tLQ0KDQpgYGB7ciBpbmNsdWRlPUZBTFNFfQ0KcmVxdWlyZSgiSG1pc2MiKQ0KYGBgDQpgciBIbWlzYzo6aGlkaW5nVE9DKGxldmVscyA9IDIpYA0KDQpgYGB7ciBzZXR1cCwgbWVzc2FnZT1GQUxTRX0NCmxpYnJhcnkoaGF2ZW4pDQpsaWJyYXJ5KGl2cmVnKQ0KaWYgKCFyZXF1aXJlTmFtZXNwYWNlKCJTdGF0YW1hcmtkb3duIiwgcXVpZXRseSA9IFRSVUUpKSB7DQogIHJlbW90ZXM6Omluc3RhbGxfZ2l0aHViKCJIZW1rZW4vU3RhdGFtYXJrZG93biIpDQp9DQpsaWJyYXJ5KFN0YXRhbWFya2Rvd24pDQpgYGANCg0KIyMgU2ltdWxhdGUgZGF0YQ0KDQpgYGB7cn0NCnNldC5zZWVkKDEyMzQ1KQ0KbiA8LSAyMDAwDQpnMSA8LSByYmlub20obiwgMiwgLjQpICMgZ2VuZXRpYyBpbnN0cnVtZW50cw0KZzIgPC0gcmJpbm9tKG4sIDIsIC4zKQ0KZzMgPC0gcmJpbm9tKG4sIDIsIC4yNSkNCnUgPC0gcm5vcm0obikgIyB1bm1lYXN1cmVkIGNvbmZvdW5kZXINCncgPC0gcnVuaWYobikgIyBtZWFzdXJlZCBjb25mb3VuZGVyDQp4MSA8LSBnMSArIGcyICsgZzMgKyB3ICsgdSArIHJub3JtKG4pICMgZXhwb3N1cmUgMQ0KeDIgPC0gLjUqZzEgLSAuNSpnMiArIDAqZzMgKyB1ICsgcm5vcm0obikgIyBleHBvc3VyZSAyDQp5IDwtIHgxICsgMC41KngyICsgdSArIHJub3JtKG4pICMgb3V0Y29tZQ0KZGF0IDwtIGRhdGEuZnJhbWUoZzEsIGcyLCBnMywgdywgeDEsIHgyLCB5KQ0Kd3JpdGVfZHRhKGRhdCwgIm12bXItZXhhbXBsZS5kdGEiKQ0KYGBgDQoNCiMjIE9uZS1zYW1wbGUgTVZNUiB3aXRoIFRTTFMgaW4gUg0KDQpgYGB7cn0NCmZpdCA8LSBpdnJlZyh5IH4geDEgKyB4MiArIHcgfCB3ICsgZzEgKyBnMiArIGczLCBkYXRhID0gZGF0KQ0Kc3VtbWFyeShmaXQpDQojIEVzdGltYXRlcyB3aXRoIDk1JSBDSXMNCmNiaW5kKGNvZWYoZml0KSwgY29uZmludC5kZWZhdWx0KGZpdCkpDQpgYGANCg0KIyMgT25lLXNhbXBsZSBNVk1SIHdpdGggVFNMUyBpbiBTdGF0YQ0KDQpgYGB7c3RhdGF9DQp1c2UgbXZtci1leGFtcGxlDQppdnJlZ3Jlc3MgMnNscyB5IHcgKHgxIHgyID0gZzEgZzIgZzMpDQplc3RhdCBlbmRvZw0KZXN0YXQgb3ZlcmlkDQpgYGANCg0KIyMgV2l0aG91dCBhZGp1c3RpbmcgZm9yIGEgY292YXJpYXRlDQoNCiMjIyBSIGNvZGUNCg0KYGBge3J9DQpmaXQgPC0gaXZyZWcoeSB+IHgxICsgeDIgfCBnMSArIGcyICsgZzMsIGRhdGEgPSBkYXQpDQpzdW1tYXJ5KGZpdCkNCiMgRXN0aW1hdGVzIHdpdGggOTUlIENJcw0KY2JpbmQoY29lZihmaXQpLCBjb25maW50LmRlZmF1bHQoZml0KSkNCmBgYA0KDQojIyMgU3RhdGEgY29kZQ0KDQpgYGB7c3RhdGF9DQp1c2UgbXZtci1leGFtcGxlDQppdnJlZ3Jlc3MgMnNscyB5ICh4MSB4MiA9IGcxIGcyIGczKQ0KZXN0YXQgZW5kb2cNCmVzdGF0IG92ZXJpZA0KYGBg</div>
 
 
 </div>
